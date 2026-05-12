@@ -12,17 +12,18 @@
 class Solution {
     public int minMeetingRooms(List<Interval> intervals) {
 
-        intervals.sort((a,b)-> a.start-b.start);
+        if(intervals == null || intervals.size()==0) return 0;
+
+        intervals.sort((a,b) -> a.start-b.start);
 
         PriorityQueue<Integer> pq = new PriorityQueue<>();
 
-        for(Interval interval : intervals){
+        for(Interval interval: intervals){
 
-            if(!pq.isEmpty() && interval.start>=pq.peek()) {
+            if(!pq.isEmpty() && pq.peek()<=interval.start){
                 pq.poll();
             }
-
-            pq.offer(interval.end);
+            pq.offer(interval.end);          
         }
 
         return pq.size();
